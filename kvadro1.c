@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <locale.h>
 
-// Проверить верность ввода scanf, несколько попыток
-// функции
+// ГЏГ°Г®ГўГҐГ°ГЁГІГј ГўГҐГ°Г­Г®Г±ГІГј ГўГўГ®Г¤Г  scanf, Г­ГҐГ±ГЄГ®Г«ГјГЄГ® ГЇГ®ГЇГ»ГІГ®ГЄ
+// ГґГіГ­ГЄГ¶ГЁГЁ
 int main (){
     setlocale (LC_ALL, "Rus");
-    printf ("\n\n ----------------------- \n Квадратное уравнение имеет вид ax^2+bx+c=0 \n");
-    printf (" Введите переменные а, b, c: ");
+    printf ("\n\n ----------------------- \n ГЉГўГ Г¤Г°Г ГІГ­Г®ГҐ ГіГ°Г ГўГ­ГҐГ­ГЁГҐ ГЁГ¬ГҐГҐГІ ГўГЁГ¤ ax^2+bx+c=0 \n");
+    printf (" Г‚ГўГҐГ¤ГЁГІГҐ ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г , b, c: ");
     double a, b, c, Discr, x1, x2;
     int ret = scanf ("%lg %lg %lg", &a, &b, &c);
     int Quad_eq ()
@@ -25,8 +25,6 @@ int main (){
             else {
                 Discr = b*b - 4*a*c;
                 if (Discr >= 0) {
-                    printf ("Discr = %lg", Discr);
-                    printf ("\n Ret = %d", ret);
                     x1 = (-b + sqrt(Discr)) / (2*a);
                     x2 = (-b - sqrt(Discr)) / (2*a);
                     return 2;
@@ -42,15 +40,15 @@ int main (){
     }
         int nRoots = Quad_eq(a, b, c, &x1, &x2);
         switch (nRoots){
-            case 3: printf ("Бесконечное количество решений");
+            case 3: printf ("ГЃГҐГ±ГЄГ®Г­ГҐГ·Г­Г®ГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г°ГҐГёГҐГ­ГЁГ©");
             break;
             case 1: printf (" x1 = %lg", x1);
             break;
             case 2: printf ("\n x1= %lg \n  x2= %lg \n", x1, x2);
             break;
-            case 0: printf ("\n Нет решений в вещественных числах");
+            case 0: printf ("\n ГЌГҐГІ Г°ГҐГёГҐГ­ГЁГ© Гў ГўГҐГ№ГҐГ±ГІГўГҐГ­Г­Г»Гµ Г·ГЁГ±Г«Г Гµ");
             break;
-            case -1: printf("\n Вы ввели ахинею \n\n Попробуйте снова!!!\n\n"); return main ();
+            case -1: printf("\n Г‚Г» ГўГўГҐГ«ГЁ Г ГµГЁГ­ГҐГѕ \n\n ГЏГ®ГЇГ°Г®ГЎГіГ©ГІГҐ Г±Г­Г®ГўГ !!!\n\n"); return main ();
             break;
             }
     }
