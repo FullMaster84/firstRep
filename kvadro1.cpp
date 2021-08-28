@@ -3,7 +3,7 @@
 #include <locale.h>
 #include <math.h>
 
-//Рассказать  про то, что нужно вынести в отдельные файлы, раздельная линковка, хэдеры
+//Р Р°СЃСЃРєР°Р·Р°С‚СЊ  РїСЂРѕ С‚Рѕ, С‡С‚Рѕ РЅСѓР¶РЅРѕ РІС‹РЅРµСЃС‚Рё РІ РѕС‚РґРµР»СЊРЅС‹Рµ С„Р°Р№Р»С‹, СЂР°Р·РґРµР»СЊРЅР°СЏ Р»РёРЅРєРѕРІРєР°, С…СЌРґРµСЂС‹
 
 enum NUMROOTS {
     NO_ROOTS = 0,
@@ -53,14 +53,14 @@ int combo_eq (const double a, const double b, const double c, double* x1, double
 }
 
 void NumVariables () {
-    printf("\n Вы ввели ахинею \n\n Попробуйте снова!!!\n\n");
+    printf("\n Р’С‹ РІРІРµР»Рё Р°С…РёРЅРµСЋ \n\n РџРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°!!!\n\n");
     while (getchar() != '\n') { continue; }
 }
 
 int main () {
     setlocale (LC_ALL, "Rus");
-    printf ("\n\n ----------------------- \n Квадратное уравнение имеет вид ax^2+bx+c=0 \n");
-    printf (" Введите переменные а, b, c: ");
+    printf ("\n\n ----------------------- \n РљРІР°РґСЂР°С‚РЅРѕРµ СѓСЂР°РІРЅРµРЅРёРµ РёРјРµРµС‚ РІРёРґ ax^2+bx+c=0 \n");
+    printf (" Р’РІРµРґРёС‚Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ Р°, b, c: ");
     double a = 0, b = 0, c = 0;
     double x1 = 0, x2 = 0;
     while (scanf ("%lg %lg %lg", &a, &b, &c) != 3)  {
@@ -68,7 +68,7 @@ int main () {
     }
     int nRoots = combo_eq(a, b, c, &x1, &x2);
     switch (nRoots) {
-        case INF_ROOTS: printf ("\n Бесконечное количество решений \n");
+        case INF_ROOTS: printf ("\n Р‘РµСЃРєРѕРЅРµС‡РЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЂРµС€РµРЅРёР№ \n");
         break;
 
         case ONE_ROOT: printf (" x1 = %lg", x1);
@@ -77,7 +77,7 @@ int main () {
         case TWO_ROOTS: printf ("\n x1= %lg \n x2= %lg \n", x1, x2);
         break;
 
-        case NO_ROOTS: printf ("\n Нет решений в вещественных числах \n");
+        case NO_ROOTS: printf ("\n РќРµС‚ СЂРµС€РµРЅРёР№ РІ РІРµС‰РµСЃС‚РІРµРЅРЅС‹С… С‡РёСЃР»Р°С… \n");
         break;
      }
 
