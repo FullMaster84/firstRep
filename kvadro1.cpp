@@ -2,9 +2,13 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <math.h>
+#include <assert.h>
 
 //Рассказать  про то, что нужно вынести в отдельные файлы, раздельная линковка, хэдеры
 
+/*! These constants are used in functions of type INT
+    so that functions will return to them.
+*/
 enum NUMROOTS {
     NO_ROOTS = 0,
     ONE_ROOT = 1,
@@ -12,9 +16,31 @@ enum NUMROOTS {
     INF_ROOTS = 3,
 };
 
+const double INFEL = 0.0000001;
+
+/*! compares the entered values of variables with an error
+*/
+bool CmpZero (double value_type) {
+    return fabs(value_type) < INFEL;
+}
+
+
+/*!  This function serves as a special case of solving the quadratic equation
+     @param [in]  b ( coefficient )
+     @param [in]  c ( coefficient )
+     @param [out] x1 ( root of equation )
+
+     @return Number of roots
+
+     @note Constants are used: ONE_ROOTS, NO_ROOTS.
+*/
 int LineEq (const double b, const double c, double* x1) {
-    if (b == 0) {
-        if (c == 0) {
+    assert (std:: isfinite (b));
+    assert (std:: isfinite (c));
+    assert (x1 != NULL);
+
+    if (CmpZero (b)) {
+        if (CmpZero (c)) {
             return INF_ROOTS;
         }
         else {
@@ -28,13 +54,37 @@ int LineEq (const double b, const double c, double* x1) {
 }
 
 
+/*!  This function is a solution to the quadratic equation
+     @param [in]  a ( coefficient )
+     @param [in]  b ( coefficient )
+     @param [in]  c ( coefficient )
+     @param [out] x1 ( 1st root of equation )
+     @param [out] x2 ( 2nd root of equation )
+
+     @return Number of roots
+
+     @note Constants are used: TWO_ROOTS, NO_ROOTS.
+*/
 int QuadEq (const double a, const double b, const double c, double* x1, double* x2) {
+    assert (std:: isfinite (a));
+    assert (std:: isfinite (b));
+    assert (std:: isfinite (c));
+    assert (x1 != NULL);
+    assert (x2 != NULL);
+    assert (x1 != x2);
+
     double discr = b * b - 4 * a * c;
 
     if (discr >= 0) {
-        *x1 = (-b + sqrt(discr)) / (2 * a);
-        *x2 = (-b - sqrt(discr)) / (2 * a);
-        return TWO_ROOTS;
+        if (CmpZero (discr)){
+            *x1 = *x2 = -b / (2 * a);
+            return ONE_ROOT;
+        }
+        else {
+            *x1 = (-b + sqrt(discr)) / (2 * a);
+            *x2 = (-b - sqrt(discr)) / (2 * a);
+            return TWO_ROOTS;
+        }
     }
     else {
         return NO_ROOTS;
@@ -43,8 +93,26 @@ int QuadEq (const double a, const double b, const double c, double* x1, double* 
 }
 
 
-int combo_eq (const double a, const double b, const double c, double* x1, double* x2) { //TODO Name of fucntion
-    if (a == 0) {
+/*! \brief Combines special cases of solving a quadratic equation.
+    Does checking for variables and roots.
+
+     @param [in]  a ( coefficient )
+     @param [in]  b ( coefficient )
+     @param [in]  c ( coefficient )
+     @param [out] x1 ( 1st root of equation )
+     @param [out] x2 ( 2nd root of equation )
+
+     @return Number of roots
+*/
+int ComboEq (const double a, const double b, const double c, double* x1, double* x2) {
+    assert (std:: isfinite (a));
+    assert (std:: isfinite (b));
+    assert (std:: isfinite (c));
+    assert (x1 != NULL);
+    assert (x2 != NULL);
+    assert (x1 != x2);
+
+    if (CmpZero (a)) {
         return LineEq (b, c, x1);
     }
     else {
@@ -52,11 +120,18 @@ int combo_eq (const double a, const double b, const double c, double* x1, double
     }
 }
 
+
+/*! This function checks the entered parameters of the coefficients for numerical values.
+*/
 void NumVariables () {
     printf("\n Вы ввели ахинею \n\n Попробуйте снова!!!\n\n");
     while (getchar() != '\n') { continue; }
 }
 
+
+/*! The main function that includes all the others.
+    When entering data for a quadratic equation, outputs the answer depending on the data.
+*/
 int main () {
     setlocale (LC_ALL, "Rus");
     printf ("\n\n ----------------------- \n Квадратное уравнение имеет вид ax^2+bx+c=0 \n");
@@ -66,7 +141,7 @@ int main () {
     while (scanf ("%lg %lg %lg", &a, &b, &c) != 3)  {
         NumVariables ();
     }
-    int nRoots = combo_eq(a, b, c, &x1, &x2);
+    int nRoots = ComboEq(a, b, c, &x1, &x2);
     switch (nRoots) {
         case INF_ROOTS: printf ("\n Бесконечное количество решений \n");
         break;
